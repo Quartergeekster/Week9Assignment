@@ -15,11 +15,12 @@ def main():
         else:
             print("Choice not valid")
             choice = menu()
+        choice = menu()
         
 
 def menu():
     choice = 0
-    print("""\tWelcome to Frog's vs toads.\n
+    print("""\n\tWelcome to Frog's vs toads.\n
 Pick an option:
 \t1. Play game
 \t2. Quit""")
@@ -36,5 +37,19 @@ def PlayGame():
     MovesValid = True
     while(MovesValid):
         print("Here is your log: " + str(GameList))
-        MovesValid = False
-        print("False statement declared")
+
+def MoveFrog(GameList):
+    n1 = int(input("Select frog to move: "))
+    n1 -=1 ##Creates index position from user input
+    n2 = int(input("Select position to move to: "))
+    n2 -=1
+    if(CheckValid(n1, n2)):
+        GameList = MoveFrogPositions(n1, n2)
+
+def CheckValidMove(n1, n2):
+    print("Valid move check")
+    return True
+
+def MoveFrogPositions(GameList):
+    print("Move Frogs")
+    return GameList
