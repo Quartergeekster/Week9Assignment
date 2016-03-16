@@ -32,24 +32,45 @@ Pick an option:
     return choice
 
 
-def PlayGame():
-    GameList = ["T", "T", "T", "", "F", "F", "F"]
+def PlayGame():##Entire game is run from this function
+    GameList = ["T", "T", "T", "", "F", "F", "F"] ##Initialises "log" in game
     MovesValid = True
     while(MovesValid):
         print("Here is your log: " + str(GameList))
+        GameList = MoveFrog(GameList)
+        
+        
 
 def MoveFrog(GameList):
     n1 = int(input("Select frog to move: "))
     n1 -=1 ##Creates index position from user input
     n2 = int(input("Select position to move to: "))
     n2 -=1
-    if(CheckValid(n1, n2)):
-        GameList = MoveFrogPositions(n1, n2)
+    if(CheckValidMove(n1, n2, GameList)):
+        GameList = MoveFrogPositions(n1, n2, GameList)
 
-def CheckValidMove(n1, n2):
-    print("Valid move check")
-    return True
+    return GameList
 
-def MoveFrogPositions(GameList):
+def CheckValidMove(n1, n2, GameList): ##Checks Reasons that move could not be completed
+    IsMoveValid = True
+    if(abs(n1-n2)>2):
+        print("Jump is too big")
+        IsMoveValid = False
+        return IsMoveValid
+    if(n1==n2):
+        print("Cannot jump to same place")
+        IsMoveValid = False
+        return IsMoveValid
+    if(GameList[n1] == ""):
+        print("No amphibian in initial space")
+        IsMoveValid = False
+        return IsMoveValid
+    if(GameList[n2] != ""):
+        print("Target space is not free")
+        IsMoveValid = False
+        return IsMoveValid
+    return IsMoveValid
+    
+def MoveFrogPositions(OriginalPos, NewPos, GameList):
     print("Move Frogs")
     return GameList
