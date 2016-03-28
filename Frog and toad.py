@@ -74,13 +74,15 @@ def PlayerOption():
     return choice
 
 def MoveFrog(GameList):#Gets movement info, checks if valid, then moves animal
-    n1 = int(input("Select frog/toad to move: "))
-    n1 -=1 ##Creates index position from user input
-    n2 = int(input("Select position to move to: "))
-    n2 -=1
-    if(CheckValidMove(n1, n2, GameList)):
-        GameList = MoveFrogPositions(n1, n2, GameList)
-
+    try:
+        n1 = int(input("Select frog/toad to move: "))
+        n1 -=1 ##Creates index position from user input
+        n2 = int(input("Select position to move to: "))
+        n2 -=1
+        if(CheckValidMove(n1, n2, GameList)):
+            GameList = MoveFrogPositions(n1, n2, GameList)
+    except ValueError:
+        print("Value not valid")
     return GameList
 
 def CheckValidMove(n1, n2, GameList): ##Checks Reasons that move could not be completed
@@ -89,12 +91,12 @@ def CheckValidMove(n1, n2, GameList): ##Checks Reasons that move could not be co
         print("Jump is too big")
         IsMoveValid = False
         return IsMoveValid
-    if(n1==n2):
-        print("Cannot jump to same place")
-        IsMoveValid = False
-        return IsMoveValid
     if(GameList[n1] == ""):
         print("No amphibian in initial space")
+        IsMoveValid = False
+        return IsMoveValid
+    if(n1==n2):
+        print("Cannot jump to same place")
         IsMoveValid = False
         return IsMoveValid
     if(GameList[n2] != ""):
