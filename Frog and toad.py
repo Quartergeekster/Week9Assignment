@@ -7,24 +7,30 @@ import sys
 
 def main():
     choice = menu()
-    while(choice != 0): ##Loops until option 2 is chosen
+    while(choice != 0): ##Loops until option 4 is chosen
         if (choice == 1):
             PlayGame()
         elif(choice == 2):
+            RunDemonstration()
+        elif(choice == 3):
+            PrintRules()
+        elif(choice == 4):
+            print("Goodbye")
             sys.exit()
         else:
             print("Choice not valid")
             choice = menu()
         choice = menu()
         
-
 def menu():
     choice = 0
     print("""\n\tWelcome to Frogs vs toads.\n
     Pick an option:
     \t1. Play game
-    \t2. Quit""")
-    while(choice ==0):
+    \t2. See a computer demonstration
+    \t3. Rule list
+    \t4. Quit""")
+    while(choice == 0):
         try:
             choice = int(input("\nEnter your choice: "))
         except ValueError:
@@ -49,6 +55,7 @@ def PlayGame():##Entire game is run from this function
             sys.exit()
         MovesValid = AnyMovesValid(GameList)
     if(GameList == OriginalLog[::-1]):
+        print(GameList)
         print("CONGRATULATIONS, YOU'VE WON")
     else:
         print("No moves left. Bad Luck")
@@ -96,7 +103,7 @@ def CheckValidMove(n1, n2, GameList): ##Checks Reasons that move could not be co
         return IsMoveValid
     return IsMoveValid
 
-def AnyMovesValid(GameList):
+def AnyMovesValid(GameList):##Checks to see if there are any valid moves on the board
     ValidMove = False
     for i in range((len(GameList))):
         if(GameList[i] == "F"):
@@ -119,11 +126,28 @@ def AnyMovesValid(GameList):
                         ValidMove = True
                 except IndexError:
                     pass
-    return ValidMove
+    return ValidMove 
     
 def MoveFrogPositions(OriginalPos, NewPos, GameList):
     GameList[NewPos] = GameList[OriginalPos]
     GameList[OriginalPos] = ""
     return GameList
+
+def RunDemonstration():
+    print("\n\tHere is your log, with 3 toads and 3 frogs, and one free space")
+    print("""["T", "T", "T", "", "F", "F", "F"] """)
+    print("\n\tFrogs can only move to the left, and toads to the right, as shown below")
+    print("""["T", "T", "T", "", "F", "F", "F"] """)
+    print("""["T", "T", "T", "F", "", "F", "F"] """)
+    print("\tor")
+    print("""["T", "T", "T", "", "F", "F", "F"] """)
+    print("""["T", "T", "", "T", "F", "F", "F"] """)
+    print("\n\tBoth animals can jump over one another, but only by one space")
+    print("""["T", "T", "", "T", "F", "F", "F"] """)
+    print("""["T", "T", "F", "T", "", "F", "F"] """)
+    print("\n\tOnce they have switched places, the game has been won, like so")
+    print("""["F", "F", "F", "", "T", "T", "T"] """)
+    print("\n\tGood Luck!")
+
 
 main()
