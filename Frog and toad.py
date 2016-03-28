@@ -20,16 +20,16 @@ def main():
 
 def menu():
     choice = 0
-    print("""\n\tWelcome to Frog's vs toads.\n
+    print("""\n\tWelcome to Frogs vs toads.\n
     Pick an option:
     \t1. Play game
     \t2. Quit""")
-        while(choice ==0):
-            try:
-                choice = int(input("\nEnter your choice: "))
-            except ValueError:
-                print("Value error. Please enter a valid choice")
-        return choice
+    while(choice ==0):
+        try:
+            choice = int(input("\nEnter your choice: "))
+        except ValueError:
+            print("Value error. Please enter a valid choice")
+    return choice
 
 def PlayGame():##Entire game is run from this function
     OriginalLog = ["T", "T", "T", "", "F", "F", "F"] ##Initialises "log" in game
@@ -37,15 +37,17 @@ def PlayGame():##Entire game is run from this function
     MovesValid = True
     while(MovesValid):
         print("Here is your log: " + str(GameList))
+        MovesValid = AnyMovesValid(GameList)
         choice = PlayerOption()
         if(choice == 1):
             GameList = MoveFrog(GameList)
         if(choice == 2):
-            GameList = OriginalLog
+            GameList = ["T", "T", "T", "", "F", "F", "F"]
             print("Log reset")
         if(choice == 3):
             print("Goodbye")
             sys.exit()
+        MovesValid = AnyMovesValid(GameList)
     if(GameList == OriginalLog[::-1]):
         print("CONGRATULATIONS, YOU'VE WON")
     else:
@@ -93,8 +95,35 @@ def CheckValidMove(n1, n2, GameList): ##Checks Reasons that move could not be co
         IsMoveValid = False
         return IsMoveValid
     return IsMoveValid
+
+def AnyMovesValid(GameList):
+    ValidMove = False
+    for i in range((len(GameList))):
+        if(GameList[i] == "F"):
+            try:
+                if(GameList[i-1] == "" or GameList[i-2] == ""):
+                    ValidMove = True
+            except IndexError:
+                try:
+                    if(GameList[i-1] == ""):
+                        ValidMove = True
+                except IndexError:
+                    pass
+        if(GameList[i] == "T"):
+            try:
+                if(GameList[i+1] == "" or GameList[i+2] == ""):
+                    ValidMove = True
+            except IndexError:
+                try:
+                    if(GameList[i+1] == ""):
+                        ValidMove = True
+                except IndexError:
+                    pass
+    return ValidMove
     
 def MoveFrogPositions(OriginalPos, NewPos, GameList):
     GameList[NewPos] = GameList[OriginalPos]
     GameList[OriginalPos] = ""
     return GameList
+
+main()
