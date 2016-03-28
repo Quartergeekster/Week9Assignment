@@ -64,7 +64,7 @@ def PlayGame():##Entire game is run from this function
         
 def PlayerOption():
     choice = 0
-    print("\n\tWhat will you do?\n1. Move Frogs\n2. Reset log\n3. Quit program")
+    print("\n\tWhat will you do?\n1. Move Frogs/Toads\n2. Reset log\n3. Quit program")
     while(choice == 0):
         try:
             choice = int(input("\nEnter Choice: "))
@@ -74,7 +74,7 @@ def PlayerOption():
     return choice
 
 def MoveFrog(GameList):#Gets movement info, checks if valid, then moves animal
-    n1 = int(input("Select frog to move: "))
+    n1 = int(input("Select frog/toad to move: "))
     n1 -=1 ##Creates index position from user input
     n2 = int(input("Select position to move to: "))
     n2 -=1
@@ -136,7 +136,7 @@ def AnyMovesValid(GameList):##Checks to see if there are any valid moves on the 
                     pass
     return ValidMove ##returns true if any moves are valid
     
-def MoveFrogPositions(OriginalPos, NewPos, GameList):#Moves frog within list
+def MoveFrogPositions(OriginalPos, NewPos, GameList):#Moves frog/toad within list
     GameList[NewPos] = GameList[OriginalPos]
     GameList[OriginalPos] = ""
     return GameList
